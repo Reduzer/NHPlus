@@ -70,9 +70,6 @@ public class AllPatientController {
     @FXML
     private TextField textFieldRoomNumber;
 
-    @FXML
-    private TextField textFieldAssets;
-
     private final ObservableList<Patient> patients = FXCollections.observableArrayList();
     private PatientDao dao;
 
@@ -180,17 +177,6 @@ public class AllPatientController {
     @FXML
     public void handleOnEditRoomNumber(TableColumn.CellEditEvent<Patient, String> event){
         event.getRowValue().setRoomNumber(event.getNewValue());
-        this.doUpdate(event);
-    }
-
-    /**
-     * When a cell of the column with assets was changed, this method will be called, to persist the change.
-     *
-     * @param event Event including the changed object and the change.
-     */
-    @FXML
-    public void handleOnEditAssets(TableColumn.CellEditEvent<Patient, String> event){
-        event.getRowValue().setAssets(event.getNewValue());
         this.doUpdate(event);
     }
 
