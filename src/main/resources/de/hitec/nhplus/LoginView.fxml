@@ -4,12 +4,43 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="LogInPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="688.0" prefWidth="926.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hitec.nhplus.controller.LoginView">
-    <left>
-        <VBox id="vBox" alignment="CENTER" spacing="50.0" styleClass="vBox" stylesheets="@Application.css" BorderPane.alignment="CENTER">
+<BorderPane fx:id="LogInPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hitec.nhplus.controller.LoginView">
+    <center>
+        <VBox id="vBox" styleClass="vBox" stylesheets="@Application.css" BorderPane.alignment="CENTER">
             <children>
-
+                <Label id="TextBox" text="Name" textAlignment="CENTER" contentDisplay="CENTER" styleClass="TextBox" stylesheets="Application.css" BorderPane.alignment="CENTER">
+                    <VBox.margin>
+                        <Insets left="50" right="50"/>
+                    </VBox.margin>
+                </Label>
+                <TextField id="NameField" fx:id="NameField" styleClass="NameArea" stylesheets="Application.css" BorderPane.alignment="CENTER">
+                    <VBox.margin>
+                        <Insets left="50" right="50" top="10" bottom="70"/>
+                    </VBox.margin>
+                </TextField>
+                <Label id="TextBox" text="Name" textAlignment="CENTER" contentDisplay="CENTER" styleClass="TextBox" stylesheets="Application.css" BorderPane.alignment="CENTER">
+                    <VBox.margin>
+                        <Insets left="50" right="50"/>
+                    </VBox.margin>
+                </Label>
+                <TextField id="PasswordField" fx:id="PasswordField" styleClass="PasswordArea" stylesheets="Application.css" BorderPane.alignment="CENTER">
+                    <VBox.margin>
+                        <Insets left="50" right="50" top="10" bottom="70"/>
+                    </VBox.margin>
+                </TextField>
             </children>
         </VBox>
-    </left>
+    </center>
+
+    <bottom>
+        <VBox id="vBoxBottom" alignment="CENTER" styleClass="vBoxBottom" stylesheets="Application.css" BorderPane.alignment="CENTER" minWidth="-Infinity" minHeight="-Infinity" prefHeight="80.0">
+            <children>
+                <Button id="ButtonLogIn" contentDisplay="CENTER" mnemonicParsing="false" text="Login now" onAction="#logIn">
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                </Button>
+            </children>
+        </VBox>
+    </bottom>
 </BorderPane>

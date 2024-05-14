@@ -25,8 +25,10 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        //mainWindow();
-        loginLoadFoo();
+        loginLoad();
+        if(loggedIn){
+            mainWindow();
+        }
     }
 
     public void mainWindow() {
@@ -57,13 +59,14 @@ public class Main extends Application {
             Stage loginStage = new Stage();
 
             FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("/de/hitech/nhplus/LoginView.fxml"));
+            fxmlLoader.setLocation(getClass().getResource("/de/hitec/nhplus/LoginView.fxml"));
 
-            Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+            Scene scene = new Scene(fxmlLoader.load());
             Stage stage = new Stage();
 
             stage.setTitle("Login NHPlus");
             stage.setScene(scene);
+            stage.setResizable(false);
             stage.show();
 
             loginStage.setOnCloseRequest(event -> {
@@ -77,28 +80,6 @@ public class Main extends Application {
         }
     }
 
-    public void loginLoadFoo(){
-        try{
-            Stage loginStage = new Stage();
-
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/de/hitec/nhplus/LoginView.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 600, 400);
-            Stage stage = new Stage();
-
-            stage.setTitle("Login NHPlus");
-            stage.setScene(scene);
-            stage.show();
-
-            loginStage.setOnCloseRequest(event -> {
-                ConnectionBuilder.closeConnection();
-                Platform.exit();
-                System.exit(0);
-            });
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-    }
 
     public static void main(String[] args) {
         launch(args);

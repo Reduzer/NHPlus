@@ -1,4 +1,23 @@
 .vBox{
     -fx-background-color: navy;
     -fx-border-color: rgb(142, 142, 142);
+    -fx-min-height: 200px;
+    -fx-min-width: 200px;
+
+}
+
+.vBoxBottom{
+    -fx-background-color: red;
+    -fx-border-color: rgb(60, 60, 60);
+    -fx-spacing: 50px;
+}
+.NameArea{
+    -fx-background-color: dimgray;
+}
+
+.PasswordArea{
+    -fx-background-color: black;
+}
+.TextBox{
+    -fx-background-color: White;
 }
