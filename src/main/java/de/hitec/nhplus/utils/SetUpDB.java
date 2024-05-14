@@ -30,6 +30,7 @@ public class SetUpDB {
         Connection connection = ConnectionBuilder.getConnection();
         SetUpDB.wipeDb(connection);
         SetUpDB.setUpTablePatient(connection);
+        SetUpDB.setUpTableNurse(connection);
         SetUpDB.setUpTableTreatment(connection);
     }
 
