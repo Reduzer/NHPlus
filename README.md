@@ -4,10 +4,7 @@
 
 | Aufgabe        | Bearbeiter      |
 | ------- | ------------------ |
-| Vermögen  | Tabita |
-| Login     | Felix |
-| Verschlüsselung von Kundendaten  | Fyn |
-| Recht auf Löschung | Bjarne |
+| | |
 
 
 
