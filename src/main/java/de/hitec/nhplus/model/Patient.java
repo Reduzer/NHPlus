@@ -27,9 +27,8 @@ public class Patient extends Person {
      * @param dateOfBirth Date of birth of the patient.
      * @param careLevel Care level of the patient.
      * @param roomNumber Room number of the patient.
-     * @param assets Assets of the patient.
      */
-    public Patient(String firstName, String surname, LocalDate dateOfBirth, String careLevel, String roomNumber, String assets) {
+    public Patient(String firstName, String surname, LocalDate dateOfBirth, String careLevel, String roomNumber) {
         super(firstName, surname);
         this.dateOfBirth = new SimpleStringProperty(DateConverter.convertLocalDateToString(dateOfBirth));
         this.careLevel = new SimpleStringProperty(careLevel);
