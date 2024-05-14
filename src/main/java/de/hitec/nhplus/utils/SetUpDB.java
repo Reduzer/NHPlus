@@ -85,6 +85,24 @@ public class SetUpDB {
         }
     }
 
+    private static void setUpTableNurse(Connection connection){
+        final String SQL = final String SQL = "CREATE TABLE IF NOT EXISTS nurse (" +
+                "   pid INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "   firstname TEXT NOT NULL, " +
+                "   surname TEXT NOT NULL, " +
+                "   dateOfBirth TEXT NOT NULL, " +
+                "   Permissions TEXT NOT NULL, " +
+                "   CurrentTreatment TEXT NOT NULL, " +
+                ");";
+
+        try(Statement statement = connection.createStatement()){
+            statement.execute(SQL);
+        }
+        catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
     public void main(String[] args) {
         SetUpDB.setUpDb();
     }
