@@ -26,7 +26,6 @@ public class Main extends Application {
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("/de/hitec/nhplus/MainWindowView.fxml"));
             BorderPane pane = loader.load();
-
             Scene scene = new Scene(pane);
             this.primaryStage.setTitle("NHPlus");
             this.primaryStage.setScene(scene);
