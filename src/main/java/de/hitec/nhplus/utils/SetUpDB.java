@@ -30,6 +30,7 @@ public class SetUpDB {
         Connection connection = ConnectionBuilder.getConnection();
         SetUpDB.wipeDb(connection);
         SetUpDB.setUpTablePatient(connection);
+        SetUpDB.setUpTableNurse(connection);
         SetUpDB.setUpTableTreatment(connection);
     }
 
@@ -95,10 +96,24 @@ public class SetUpDB {
     }
 
 
-    /**
-     * This is the main method for the Database setup
-     * @param args
-     */
+    private static void setUpTableNurse(Connection connection){
+        final String SQL = "CREATE TABLE IF NOT EXISTS nurse (" +
+                "   pid INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "   firstname TEXT NOT NULL, " +
+                "   surname TEXT NOT NULL, " +
+                "   dateOfBirth TEXT NOT NULL, " +
+                "   Permissions TEXT NOT NULL, " +
+                "   CurrentTreatment TEXT NOT NULL " +
+                ");";
+
+        try(Statement statement = connection.createStatement()){
+            statement.execute(SQL);
+        }
+        catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
     public void main(String[] args) {
         SetUpDB.setUpDb();
     }
