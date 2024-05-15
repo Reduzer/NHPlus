@@ -23,8 +23,8 @@ import static de.hitec.nhplus.utils.DateConverter.convertStringToLocalTime;
 public class SetUpDB {
 
     /**
-     * This method wipes the database by dropping the tables. Then the method calls DDL statements to build it up from
-     * scratch and DML statements to fill the database with hard coded test data.
+     * This method wipes the database by dropping the tables. Then the methods to set up the needed tables
+     * @param None
      */
     public static void setUpDb() {
         Connection connection = ConnectionBuilder.getConnection();
@@ -36,8 +36,7 @@ public class SetUpDB {
 
     /**
      * This method wipes the database by dropping the tables.
-     * 
-     * Warum wird dies zu anfang ausgeführt?
+     * @param connection
      */
     public static void wipeDb(Connection connection) {
         
@@ -50,6 +49,10 @@ public class SetUpDB {
         
     }
 
+        /**
+        * This Method set up the Table for the Patients
+        * @param connection
+        */
     private static void setUpTablePatient(Connection connection) {
         final String SQL = "CREATE TABLE IF NOT EXISTS patient (" +
                 "   pid INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -67,6 +70,12 @@ public class SetUpDB {
         }
     }
 
+
+
+    /**
+     * This Method is for setting up the table for treatments
+     * @param connection
+     */
     private static void setUpTableTreatment(Connection connection) {
         final String SQL = "CREATE TABLE IF NOT EXISTS treatment (" +
                 "   tid INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -85,6 +94,7 @@ public class SetUpDB {
             System.out.println(exception.getMessage());
         }
     }
+
 
     private static void setUpTableNurse(Connection connection){
         final String SQL = "CREATE TABLE IF NOT EXISTS nurse (" +
