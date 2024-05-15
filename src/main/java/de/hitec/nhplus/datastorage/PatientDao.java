@@ -173,4 +173,23 @@ public class PatientDao extends DaoImp<Patient> {
         }
         return preparedStatement;
     }
+
+    public void deleteOldPatients() {
+        try {
+            LocalDate tenYearsAgo = LocalDate.now().minusYears(10);
+            ArrayList<Patient> patientsToDelete = new ArrayList<>();
+            for (Patient patient : readAll()) {
+                if (patient.getDateOfBirth().isBefore(tenYearsAgo)) {
+                    patientsToDelete.add(patient);
+                }
+            }
+
+            for (Patient patient : patientsToDelete) {
+                deleteById(patient.getPid());
+            }
+
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+    }
 }
