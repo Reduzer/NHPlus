@@ -13,6 +13,7 @@ public class LoginView {
 
     public TextField PasswordField;
     public TextField NameField;
+    
     @FXML
     private BorderPane LogInPane;
 

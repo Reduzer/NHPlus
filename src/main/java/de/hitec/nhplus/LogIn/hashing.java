@@ -3,8 +3,6 @@ package de.hitec.nhplus.LogIn;
 import java.security.MessageDigest;
 
 public class hashing {
-    
-    
 
     //Hashes the input and return the hashed string
     public String getHash(String input){
@@ -20,5 +18,4 @@ public class hashing {
              
         return returnString;
     }
-
 }
