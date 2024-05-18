@@ -34,6 +34,11 @@ import java.util.List;
         public void deleteById(long key) throws SQLException {
             getDeleteStatement(key).executeUpdate();
         }
+        public void deleteTreatment(long key) throws SQLException {
+            deleteOldTreatment(key).executeUpdate();
+        }
+
+
         protected abstract T getInstanceFromResultSet(ResultSet set) throws SQLException;
         protected abstract ArrayList<T> getListFromResultSet(ResultSet set) throws SQLException;
         protected abstract PreparedStatement getCreateStatement(T t);
