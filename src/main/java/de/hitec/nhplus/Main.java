@@ -15,7 +15,7 @@ import java.net.URL;
 
 public class Main extends Application {
 
-    private static Stage primaryStage;
+    private Stage primaryStage;
     private Stage loginStage;
     private FXMLLoader loader;
     private static boolean loggedIn = false;
@@ -26,12 +26,8 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
+        loader = new FXMLLoader();
         loginLoad();
-        if(loggedIn){
-            loginStage = null;
-            this.primaryStage = primaryStage;
-            mainWindow();
-        }
     }
 
     public void mainWindow() {
@@ -71,18 +67,19 @@ public class Main extends Application {
             stage.show();
 
             loginStage.setOnCloseRequest(event -> {
-                ConnectionBuilder.closeConnection();
-                Platform.exit();
-                System.exit(0);
+                if(loggedIn){
+                    mainWindow();
+                }
+                else{
+                    ConnectionBuilder.closeConnection();
+                    Platform.exit();
+                    System.exit(0);
+                }
             });
         }
         catch(Exception e){
             e.printStackTrace();
         }
-    }
-
-    public static Stage getCurrentStage(){
-        return primaryStage;
     }
 
     public static void main(String[] args) {

@@ -62,7 +62,7 @@ public class LoginView {
                 System.out.println("Login Successful");
                 Main.setLoggedIn(true);
 
-                Stage stage = (Stage) Main.getCurrentStage().getScene().getWindow();
+                Stage stage = (Stage) PasswordField.getScene().getWindow();
                 stage.close();
             }
             else{
