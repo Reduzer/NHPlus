@@ -1,7 +1,11 @@
 package de.hitec.nhplus.datastorage;
 
 import de.hitec.nhplus.model.Nurse;
+import de.hitec.nhplus.model.Patient;
+import de.hitec.nhplus.utils.DateConverter;
+
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,77 +15,60 @@ import java.util.List;
  */
 public class NurseDao extends DaoImp<Nurse> {
 
+
     /**
-     * The constructor initiates an object of <code>NurseDao</code> and passes the connection to its super class.
-     *
-     * @param connection Object of <code>Connection</code> to execute the SQL-statements.
+     * Default Constructor for NurseDao
+     * @param connection
      */
     public NurseDao(Connection connection) {
         super(connection);
     }
 
-    /**
-     * Generates a <code>PreparedStatement</code> to persist the given object of <code>Nurse</code>.
-     *
-     * @param nurse Object of <code>Nurse</code> to persist.
-     * @return <code>PreparedStatement</code> to insert the given nurse.
-     */
     @Override
     protected PreparedStatement getCreateStatement(Nurse nurse) {
-        PreparedStatement preparedStatement = null;
-        try {
-            final String SQL = "INSERT INTO nurse (Fname, Lname, NPid) " +
-                    "VALUES (?, ?, ?)";
-            preparedStatement = this.connection.prepareStatement(SQL);
-            preparedStatement.setString(1, nurse.getFirstName());
-            preparedStatement.setString(2, nurse.getSurname());
-            preparedStatement.setLong(3, nurse.getnPersonalNumber());
-        } catch (SQLException exception) {
-            exception.printStackTrace();
+        PreparedStatement statement = null;
+        try{
+            final String sSQLCommand = "INSERT INTO nurse (NPID, Username, Password, Position, Fname, Lname)" +
+                    "Values (?,?,?,?,?,?)";
+            statement = connection.prepareStatement(sSQLCommand);
+            statement.setString(1, String.valueOf(nurse.getnPersonalNumber()));
+            statement.setString(2, nurse.getUsername());
+            statement.setString(3, nurse.getPassword());
+            statement.setString(4, String.valueOf(nurse.getPosition()));
+            statement.setString(5, nurse.getFirstName());
+            statement.setString(6, nurse.getSurname());
         }
-        return preparedStatement;
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+        return statement;
     }
 
-    /**
-     * Generates a <code>PreparedStatement</code> to query a nurse by a given nurse id (nid).
-     *
-     * @param NPid Nurse id to query.
-     * @return <code>PreparedStatement</code> to query the nurse.
-     */
+
     @Override
-    protected PreparedStatement getReadByIDStatement(long NPid) {
+    protected PreparedStatement getReadByIDStatement(long pid) {
         PreparedStatement preparedStatement = null;
         try {
-            final String SQL = "SELECT * FROM nurse WHERE nPid = ?";
+            final String SQL = "SELECT * FROM nurse WHERE NPid = ?";
             preparedStatement = this.connection.prepareStatement(SQL);
-            preparedStatement.setLong(1, nid);
+            preparedStatement.setLong(1, pid);
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
         return preparedStatement;
     }
 
-    /**
-     * Maps a <code>ResultSet</code> of one nurse to an object of <code>Nurse</code>.
-     *
-     * @param result ResultSet with a single row. Columns will be mapped to an object of class <code>Nurse</code>.
-     * @return Object of class <code>Nurse</code> with the data from the resultSet.
-     */
     @Override
     protected Nurse getInstanceFromResultSet(ResultSet result) throws SQLException {
-        Nurse nurse = new Nurse(
-                result.getString("firstName"),
-                result.getString("surname")
-        );
-        nurse.NPid(result.getLong("nPersonalNumber"));
-        return nurse;
+        return new Nurse(
+                result.getLong(1),
+                result.getString(2),
+                result.getString(3),
+                result.getString(4),
+                result.getString(5),
+                result.getInt(6));
     }
 
-    /**
-     * Generates a <code>PreparedStatement</code> to query all nurses.
-     *
-     * @return <code>PreparedStatement</code> to query all nurses.
-     */
     @Override
     protected PreparedStatement getReadAllStatement() {
         PreparedStatement statement = null;
@@ -94,68 +81,54 @@ public class NurseDao extends DaoImp<Nurse> {
         return statement;
     }
 
-    /**
-     * Maps a <code>ResultSet</code> of all nurses to an <code>ArrayList</code> of <code>Nurse</code> objects.
-     *
-     * @param result ResultSet with all rows. The Columns will be mapped to objects of class <code>Nurse</code>.
-     * @return <code>ArrayList</code> with objects of class <code>Nurse</code> of all rows in the
-     * <code>ResultSet</code>.
-     */
     @Override
     protected ArrayList<Nurse> getListFromResultSet(ResultSet result) throws SQLException {
         ArrayList<Nurse> list = new ArrayList<>();
         while (result.next()) {
             Nurse nurse = new Nurse(
-                    result.getString("firstName"),
-                    result.getString("surname")
-            );
-            nurse.NPid(result.getLong("nPersonalNumber"));
+                    result.getLong(1),
+                    result.getString(2),
+                    result.getString(3),
+                    result.getString(4),
+                    result.getString(5),
+                    result.getInt(6));
             list.add(nurse);
         }
         return list;
     }
 
-    /**
-     * Generates a <code>PreparedStatement</code> to update the given nurse, identified
-     * by the id of the nurse (nid).
-     *
-     * @param nurse Nurse object to update.
-     * @return <code>PreparedStatement</code> to update the given nurse.
-     */
     @Override
     protected PreparedStatement getUpdateStatement(Nurse nurse) {
         PreparedStatement preparedStatement = null;
         try {
             final String SQL =
                     "UPDATE nurse SET " +
-                            "firstName = ?, " +
-                            "surname = ?, " +
-                            "nPersonalNumber = ? " +
-                            "WHERE nid = ?";
+                            "Usernane = ?, " +
+                            "Password = ?, " +
+                            "Position = ?, " +
+                            "Fname = ?, " +
+                            "Lname = ? " +
+                            "WHERE NPid = ?";
             preparedStatement = this.connection.prepareStatement(SQL);
-            preparedStatement.setString(1, nurse.getFirstName());
-            preparedStatement.setString(2, nurse.getSurname());
-            preparedStatement.setLong(3, nurse.getnPersonalNumber());
-            preparedStatement.setLong(4, nurse.getNPid());
+            preparedStatement.setString(1, nurse.getUsername());
+            preparedStatement.setString(2, nurse.getPassword());
+            preparedStatement.setInt(3, nurse.getPosition());
+            preparedStatement.setString(4, nurse.getFirstName());
+            preparedStatement.setString(5, nurse.getSurname());
+            preparedStatement.setLong(6, nurse.getnPersonalNumber());
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
         return preparedStatement;
     }
 
-    /**
-     * Generates a <code>PreparedStatement</code> to delete a nurse with the given id.
-     *
-     * @param nid Id of the nurse to delete.
-     * @return <code>PreparedStatement</code> to delete nurse with the given id.
-     */
     @Override
-    protected PreparedStatement getDeleteStatement(long nid) {
+    protected PreparedStatement getDeleteStatement(long pid) {
         PreparedStatement preparedStatement = null;
         try {
-            final String SQL = "DELETE FROM nurse WHERE NPid = ?";
+            final String SQL = "DELETE FROM nurse WHERE pid = ?";
             preparedStatement = this.connection.prepareStatement(SQL);
-            preparedStatement.setLong(1, nid);
+            preparedStatement.setLong(1, pid);
         } catch (SQLException exception) {
             exception.printStackTrace();
         }

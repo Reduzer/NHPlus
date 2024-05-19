@@ -18,7 +18,7 @@
                         <Insets left="50" right="50" top="10" bottom="70"/>
                     </VBox.margin>
                 </TextField>
-                <Label id="TextBox" text="Name" textAlignment="CENTER" contentDisplay="CENTER" styleClass="TextBox" stylesheets="Application.css" BorderPane.alignment="CENTER">
+                <Label id="TextBox" text="Password" textAlignment="CENTER" contentDisplay="CENTER" styleClass="TextBox" stylesheets="Application.css" BorderPane.alignment="CENTER">
                     <VBox.margin>
                         <Insets left="50" right="50"/>
                     </VBox.margin>

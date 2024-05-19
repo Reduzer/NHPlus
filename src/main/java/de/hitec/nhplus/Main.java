@@ -15,7 +15,8 @@ import java.net.URL;
 
 public class Main extends Application {
 
-    private Stage primaryStage;
+    private static Stage primaryStage;
+    private Stage loginStage;
     private FXMLLoader loader;
     private static boolean loggedIn = false;
     public static void setLoggedIn(boolean loggedInBool){
@@ -27,6 +28,8 @@ public class Main extends Application {
         this.primaryStage = primaryStage;
         loginLoad();
         if(loggedIn){
+            loginStage = null;
+            this.primaryStage = primaryStage;
             mainWindow();
         }
     }
@@ -54,7 +57,7 @@ public class Main extends Application {
 
     public void loginLoad(){
         try{
-            Stage loginStage = new Stage();
+            loginStage = new Stage();
 
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/de/hitec/nhplus/LoginView.fxml"));
@@ -76,6 +79,10 @@ public class Main extends Application {
         catch(Exception e){
             e.printStackTrace();
         }
+    }
+
+    public static Stage getCurrentStage(){
+        return primaryStage;
     }
 
     public static void main(String[] args) {
