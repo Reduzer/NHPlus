@@ -174,4 +174,9 @@ public class PatientDao extends DaoImp<Patient> {
         return preparedStatement;
     }
 
+    @Override
+    protected PreparedStatement deleteOldTreatment(long key) {
+        return null;
+    }
+
 }

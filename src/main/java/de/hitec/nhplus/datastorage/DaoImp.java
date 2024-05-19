@@ -39,6 +39,7 @@ import java.util.List;
         }
 
 
+
         protected abstract T getInstanceFromResultSet(ResultSet set) throws SQLException;
         protected abstract ArrayList<T> getListFromResultSet(ResultSet set) throws SQLException;
         protected abstract PreparedStatement getCreateStatement(T t);
@@ -46,6 +47,7 @@ import java.util.List;
         protected abstract PreparedStatement getReadAllStatement();
         protected abstract PreparedStatement getUpdateStatement(T t);
         protected abstract PreparedStatement getDeleteStatement(long key);
+        protected abstract PreparedStatement deleteOldTreatment(long key);
     }
 
 
