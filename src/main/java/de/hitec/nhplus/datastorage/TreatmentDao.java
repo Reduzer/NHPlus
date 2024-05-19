@@ -206,4 +206,31 @@ public class TreatmentDao extends DaoImp<Treatment> {
         }
         return preparedStatement;
     }
+
+    @Override
+    protected PreparedStatement deleteOldTreatment(long key) {
+        return null;
+    }
+
+
+    public void deleteOldTreatment() {
+        try {
+            LocalDate tenYearsAgo = LocalDate.now().minusYears(10);
+            ArrayList<Treatment> treatmentsToDelete = new ArrayList<>();
+            for (Treatment treatment : readAll()) {
+            if (treatment.getDate() == String.valueOf(tenYearsAgo)) {
+                treatmentsToDelete.add(treatment);
+            }
+
+            }
+            for (Treatment treatment : treatmentsToDelete) {
+                deleteById(treatment.getTid());
+            }
+        }catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+
+    }
+//treatment.getDate().intern(tenYearsAgo)
+
 }
