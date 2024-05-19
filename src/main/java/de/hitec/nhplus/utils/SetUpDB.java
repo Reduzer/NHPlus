@@ -30,6 +30,7 @@ public class SetUpDB {
         Connection connection = ConnectionBuilder.getConnection();
         SetUpDB.wipeDb(connection);
         SetUpDB.setUpTablePatient(connection);
+        SetUpDB.setUpTableNurse(connection);
         SetUpDB.setUpTableTreatment(connection);
     }
 
@@ -59,8 +60,8 @@ public class SetUpDB {
                 "   surname TEXT NOT NULL, " +
                 "   dateOfBirth TEXT NOT NULL, " +
                 "   carelevel TEXT NOT NULL, " +
+                "   roomnumber TEXT NOT NULL" +
                 "   roomnumber TEXT NOT NULL, " +
-                "   assets TEXt NOT NULL" +
                 ");";
         try (Statement statement = connection.createStatement()) {
             statement.execute(SQL);
@@ -94,11 +95,38 @@ public class SetUpDB {
         }
     }
 
+    private static void setUpPatients() {
+        try {
+            PatientDao dao = DaoFactory.getDaoFactory().createPatientDAO();
+            dao.create(new Patient("Seppl", "Herberger", convertStringToLocalDate("1945-12-01"), "4", "202"));
+            dao.create(new Patient("Martina", "Gerdsen", convertStringToLocalDate("1954-08-12"), "5", "010"));
+            dao.create(new Patient("Gertrud", "Franzen", convertStringToLocalDate("1949-04-16"), "3", "002"));
+            dao.create(new Patient("Ahmet", "Yilmaz", convertStringToLocalDate("1941-02-22"), "3", "013"));
+            dao.create(new Patient("Hans", "Neumann", convertStringToLocalDate("1955-12-12"), "2", "001"));
+            dao.create(new Patient("Elisabeth", "Müller", convertStringToLocalDate("1958-03-07"), "5", "110"));
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+    }
 
-    /**
-     * This is the main method for the Database setup
-     * @param args
-     */
+    private static void setUpTableNurse(Connection connection){
+        final String SQL = "CREATE TABLE IF NOT EXISTS nurse (" +
+                "   pid INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "   firstname TEXT NOT NULL, " +
+                "   surname TEXT NOT NULL, " +
+                "   dateOfBirth TEXT NOT NULL, " +
+                "   Permissions TEXT NOT NULL, " +
+                "   CurrentTreatment TEXT NOT NULL " +
+                ");";
+
+        try(Statement statement = connection.createStatement()){
+            statement.execute(SQL);
+        }
+        catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
     public void main(String[] args) {
         SetUpDB.setUpDb();
     }
