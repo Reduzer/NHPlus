@@ -13,6 +13,4 @@ module de.hitec.nhplus {
     exports de.hitec.nhplus;
     exports de.hitec.nhplus.controller;
     exports de.hitec.nhplus.model;
-    exports de.hitec.nhplus.scheduler;
-    opens de.hitec.nhplus.scheduler to javafx.fxml;
 }
