@@ -60,10 +60,9 @@ public class LoginView {
 
             if(checkLogin()){
                 System.out.println("Login Successful");
-                Main.setLoggedIn(true);
 
                 Stage stage = (Stage) PasswordField.getScene().getWindow();
-                stage.close();
+                Main.checkLogin(true, stage);
             }
             else{
                 System.out.println("Input is wrong");

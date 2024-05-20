@@ -18,16 +18,22 @@ public class Main extends Application {
     private Stage primaryStage;
     private Stage loginStage;
     private FXMLLoader loader;
-    private static boolean loggedIn = false;
-    public static void setLoggedIn(boolean loggedInBool){
-        loggedIn = loggedInBool;
-    }
 
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         loader = new FXMLLoader();
         loginLoad();
+    }
+
+    public void checkInput(boolean value, Stage stage){
+        if(value == true){
+            stage.Close();
+            mainwindow();
+        }
+        else{
+            
+        }
     }
 
     public void mainWindow() {
