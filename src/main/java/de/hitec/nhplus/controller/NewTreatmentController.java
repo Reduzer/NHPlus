@@ -97,6 +97,7 @@ public class NewTreatmentController {
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
+        AllTreatmentController.getAllTreatments().add(treatment);
     }
 
     @FXML
