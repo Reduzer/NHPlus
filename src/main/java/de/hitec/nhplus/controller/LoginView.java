@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 
 import de.hitec.nhplus.LogIn.*;
 
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -60,12 +61,13 @@ public class LoginView {
 
             if(checkLogin()){
                 System.out.println("Login Successful");
-
+                
                 Stage stage = (Stage) PasswordField.getScene().getWindow();
-                Main.checkLogin(true, stage);
+                Main.checkInput(true, stage);
             }
             else{
                 System.out.println("Input is wrong");
+                JOptionPane.showMessageDialog(null, "Input is wrong");
             }
         }
         else{

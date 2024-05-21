@@ -10,14 +10,16 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 
-public class Main extends Application {
+public class
+Main extends Application {
 
-    private Stage primaryStage;
+    private static Stage primaryStage;
     private Stage loginStage;
-    private FXMLLoader loader;
+    private static FXMLLoader loader;
 
     @Override
     public void start(Stage primaryStage) {
@@ -26,28 +28,28 @@ public class Main extends Application {
         loginLoad();
     }
 
-    public void checkInput(boolean value, Stage stage){
+    public static void checkInput(boolean value, Stage stage){
         if(value == true){
-            stage.Close();
-            mainwindow();
+            mainWindow();
+            stage.close();
         }
         else{
-            
+            JOptionPane.showMessageDialog(null, "Something went wrong");
         }
     }
 
-    public void mainWindow() {
+    public static void mainWindow() {
         try {
             loader = new FXMLLoader(Main.class.getResource("/de/hitec/nhplus/MainWindowView.fxml"));
             BorderPane pane = loader.load();
 
             Scene scene = new Scene(pane);
-            this.primaryStage.setTitle("NHPlus");
-            this.primaryStage.setScene(scene);
-            this.primaryStage.setResizable(false);
-            this.primaryStage.show();
+            primaryStage.setTitle("NHPlus");
+            primaryStage.setScene(scene);
+            primaryStage.setResizable(false);
+            primaryStage.show();
 
-            this.primaryStage.setOnCloseRequest(event -> {
+            primaryStage.setOnCloseRequest(event -> {
                 ConnectionBuilder.closeConnection();
                 Platform.exit();
                 System.exit(0);
@@ -73,14 +75,9 @@ public class Main extends Application {
             stage.show();
 
             loginStage.setOnCloseRequest(event -> {
-                if(loggedIn){
-                    mainWindow();
-                }
-                else{
                     ConnectionBuilder.closeConnection();
                     Platform.exit();
                     System.exit(0);
-                }
             });
         }
         catch(Exception e){
