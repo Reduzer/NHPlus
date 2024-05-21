@@ -82,6 +82,10 @@ public class TreatmentController {
         TreatmentDao dao = DaoFactory.getDaoFactory().createTreatmentDao();
         try {
             dao.update(treatment);
+            int index = AllTreatmentController.getAllTreatments().indexOf(this.treatment);
+            if (index >= 0) {
+                AllTreatmentController.getAllTreatments().set(index, this.treatment);
+            }
         } catch (SQLException exception) {
             exception.printStackTrace();
         }

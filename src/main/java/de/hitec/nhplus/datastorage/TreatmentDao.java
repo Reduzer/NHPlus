@@ -231,6 +231,10 @@ public class TreatmentDao extends DaoImp<Treatment> {
         }
 
     }
-//treatment.getDate().intern(tenYearsAgo)
+
 
 }
+
+
+//treatment.getDate().intern(tenYearsAgo)
+

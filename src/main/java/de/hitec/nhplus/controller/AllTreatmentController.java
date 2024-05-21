@@ -18,7 +18,10 @@ import de.hitec.nhplus.model.Treatment;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class AllTreatmentController {
 
@@ -54,6 +57,12 @@ public class AllTreatmentController {
     private final ObservableList<String> patientSelection = FXCollections.observableArrayList();
     private ArrayList<Patient> patientList;
 
+    private static final ObservableList<Treatment> allTreatments = FXCollections.observableArrayList();
+
+    static {
+        initializeTreatmentsList();
+    }
+
     public void initialize() {
         readAllAndShowInTableView();
         comboBoxPatientSelection.setItems(patientSelection);
@@ -76,6 +85,31 @@ public class AllTreatmentController {
         this.createComboBoxData();
     }
 
+
+    /*public static void initializeTreatmentsList() {
+        for (int i = 1; i <= 10; i++) {
+            Treatment treatment = new Treatment(i, "", "2024-05-20", "08:00", "09:00", "Treatment " + i);
+            allTreatments.add(treatment);
+        }
+    } */
+
+    public static void initializeTreatmentsList() {
+        for (int i = 1; i <= 10; i++) {
+            LocalDate date = LocalDate.of(2024, 5, 20);
+            LocalTime begin = LocalTime.of(8, 0);
+            LocalTime end = LocalTime.of(9, 0);
+            String description = "Treatment " + i;
+            String remarks = "Remarks " + i;
+            Treatment treatment = new Treatment(i, date, begin, end, description, remarks);
+            allTreatments.add(treatment);
+        }
+    }
+
+    public static ObservableList<Treatment> getAllTreatments() {
+        return allTreatments;
+    }
+
+
     public void readAllAndShowInTableView() {
         this.treatments.clear();
         comboBoxPatientSelection.getSelectionModel().select(0);
@@ -85,6 +119,8 @@ public class AllTreatmentController {
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
+        // Add treatments from the static list
+        this.treatments.addAll(allTreatments);
     }
 
     private void createComboBoxData() {
@@ -123,6 +159,8 @@ public class AllTreatmentController {
                 exception.printStackTrace();
             }
         }
+        // Add treatments from the static list
+        this.treatments.addAll(allTreatments);
     }
 
     private Patient searchInList(String surname) {
