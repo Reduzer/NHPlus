@@ -21,6 +21,10 @@ Main extends Application {
     private Stage loginStage;
     private static FXMLLoader loader;
 
+    /**
+     * This calls the method for login
+     * @param Stage
+     */
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -28,6 +32,10 @@ Main extends Application {
         loginLoad();
     }
 
+    /**
+     * This method closes the Login Page and calls the mainWindow method
+     * @param Boolean and Stage
+     */
     public static void checkInput(boolean value, Stage stage){
         if(value == true){
             mainWindow();
@@ -38,6 +46,10 @@ Main extends Application {
         }
     }
 
+    /**
+     * This Method loades the Main Page, with which the User interacts
+     * @param None
+     */
     public static void mainWindow() {
         try {
             loader = new FXMLLoader(Main.class.getResource("/de/hitec/nhplus/MainWindowView.fxml"));
@@ -59,6 +71,10 @@ Main extends Application {
         }
     }
 
+    /**
+     * This Method Loades the Login Page, from which the user has to sign into the Project
+     * @param None
+     */
     public void loginLoad(){
         try{
             loginStage = new Stage();
@@ -85,6 +101,10 @@ Main extends Application {
         }
     }
 
+    /**
+     *  The Main method of the Project
+     * @param args
+     */
     public static void main(String[] args) {
         launch(args);
     }

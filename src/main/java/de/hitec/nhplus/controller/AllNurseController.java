@@ -59,6 +59,10 @@ public class AllNurseController {
     private final ObservableList<Nurse> nurses = FXCollections.observableArrayList();
     private NurseDao dao;
 
+    /**
+     * Initializes / fills the View of the All Nurse View
+     * @param None
+     */
 
     public void initialize() {
         this.readAllAndShowInTableView();

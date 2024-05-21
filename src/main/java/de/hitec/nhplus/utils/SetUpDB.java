@@ -95,6 +95,10 @@ public class SetUpDB {
         }
     }
 
+    /**
+     * This Method is for the Setup of the Patient Table
+     * @param None
+     */
     private static void setUpPatients() {
         try {
             PatientDao dao = DaoFactory.getDaoFactory().createPatientDAO();
@@ -109,6 +113,10 @@ public class SetUpDB {
         }
     }
 
+    /**
+     * This Method is for the Setup of the Nurse Table
+     * @param Connection
+     */
     private static void setUpTableNurse(Connection connection){
         final String SQL = "CREATE TABLE IF NOT EXISTS nurse (" +
                 "   pid INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -127,6 +135,11 @@ public class SetUpDB {
         }
     }
 
+
+    /**
+     * This is the Main Method
+     * @param String[]
+     */
     public void main(String[] args) {
         SetUpDB.setUpDb();
     }
