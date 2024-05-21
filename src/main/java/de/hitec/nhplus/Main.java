@@ -18,6 +18,7 @@ public class Main extends Application {
     private Stage primaryStage;
     private Stage loginStage;
     private FXMLLoader loader;
+    private static int Permissions;
     private static boolean loggedIn = false;
     public static void setLoggedIn(boolean loggedInBool){
         loggedIn = loggedInBool;
@@ -80,6 +81,14 @@ public class Main extends Application {
         catch(Exception e){
             e.printStackTrace();
         }
+    }
+
+    public static int getPermissions() {
+        return Permissions;
+    }
+
+    public static void setPermissions(int permissions) {
+        Permissions = permissions;
     }
 
     public static void main(String[] args) {
