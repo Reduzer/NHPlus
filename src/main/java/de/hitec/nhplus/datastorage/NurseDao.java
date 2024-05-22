@@ -1,24 +1,21 @@
 package de.hitec.nhplus.datastorage;
 
 import de.hitec.nhplus.model.Nurse;
-import de.hitec.nhplus.model.Patient;
 import de.hitec.nhplus.utils.DateConverter;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Implements the Interface <code>DaoImp</code>. Overrides methods to generate specific <code>PreparedStatements</code>,
- * to execute the specific SQL Statements.
+ * Implementiert das Interface <code>DaoImp</code>. Überschreibt Methoden, um spezifische <code>PreparedStatements</code> zu erzeugen,
+ * um spezifische SQL-Befehle auszuführen.
  */
 public class NurseDao extends DaoImp<Nurse> {
 
-
     /**
-     * Default Constructor for NurseDao
-     * @param connection
+     * Standardkonstruktor für NurseDao
+     * @param connection die Datenbankverbindung
      */
     public NurseDao(Connection connection) {
         super(connection);
@@ -27,9 +24,9 @@ public class NurseDao extends DaoImp<Nurse> {
     @Override
     protected PreparedStatement getCreateStatement(Nurse nurse) {
         PreparedStatement statement = null;
-        try{
-            final String sSQLCommand = "INSERT INTO nurse (NPID, Username, Password, Position, Fname, Lname)" +
-                    "Values (?,?,?,?,?,?)";
+        try {
+            final String sSQLCommand = "INSERT INTO nurse (NPID, Username, Password, Position, Fname, Lname) " +
+                    "VALUES (?,?,?,?,?,?)";
             statement = connection.prepareStatement(sSQLCommand);
             statement.setString(1, String.valueOf(nurse.getnPersonalNumber()));
             statement.setString(2, nurse.getUsername());
@@ -37,13 +34,11 @@ public class NurseDao extends DaoImp<Nurse> {
             statement.setString(4, String.valueOf(nurse.getPosition()));
             statement.setString(5, nurse.getFirstName());
             statement.setString(6, nurse.getSurname());
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return statement;
     }
-
 
     @Override
     protected PreparedStatement getReadByIDStatement(long pid) {
@@ -103,7 +98,7 @@ public class NurseDao extends DaoImp<Nurse> {
         try {
             final String SQL =
                     "UPDATE nurse SET " +
-                            "Usernane = ?, " +
+                            "Username = ?, " +
                             "Password = ?, " +
                             "Position = ?, " +
                             "Fname = ?, " +
@@ -126,7 +121,7 @@ public class NurseDao extends DaoImp<Nurse> {
     protected PreparedStatement getDeleteStatement(long pid) {
         PreparedStatement preparedStatement = null;
         try {
-            final String SQL = "DELETE FROM nurse WHERE pid = ?";
+            final String SQL = "DELETE FROM nurse WHERE NPid = ?";
             preparedStatement = this.connection.prepareStatement(SQL);
             preparedStatement.setLong(1, pid);
         } catch (SQLException exception) {
@@ -137,10 +132,7 @@ public class NurseDao extends DaoImp<Nurse> {
 
     @Override
     protected PreparedStatement deleteOldTreatment(long key) {
+        return null; // Diese Methode wird in dieser Klasse nicht verwendet
         return null;
-    }
-
-    public void update(Nurse rowValue) {
-
     }
 }

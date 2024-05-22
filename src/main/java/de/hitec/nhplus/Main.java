@@ -20,9 +20,15 @@ public class Main extends Application {
     private static Stage primaryStage;
     // Variable für die Anmeldebühne
     private Stage loginStage;
+    private FXMLLoader loader;
+    private static int Permissions;
+    private static boolean loggedIn = false;
+    public static void setLoggedIn(boolean loggedInBool) {
+        loggedIn = loggedInBool;
+    }
+  
     // FXMLLoader-Objekt zum Laden von FXML-Dateien
     private static FXMLLoader loader;
-
 
     /**
      * This calls the method for login
@@ -117,6 +123,14 @@ public class Main extends Application {
         }
     }
 
+
+    public static int getPermissions() {
+        return Permissions;
+    }
+
+    public static void setPermissions(int permissions) {
+        Permissions = permissions;
+    }
 
     /**
      *  The Main method of the Project

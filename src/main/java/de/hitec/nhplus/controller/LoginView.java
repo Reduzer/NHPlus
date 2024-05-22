@@ -68,7 +68,8 @@ public class LoginView {
 
             if(checkLogin()){
                 System.out.println("Login Successful");
-                
+                Main.setPermissions(getPermissions());
+                Main.setLoggedIn(true);
                 Stage stage = (Stage) PasswordField.getScene().getWindow();
                 Main.checkInput(true, stage);
             }
@@ -145,6 +146,25 @@ public class LoginView {
         }
 
         return false;
+    }
+
+    private int getPermissions(){
+        PreparedStatement statement = null;
+
+        try{
+            final String sSqlStatement = "";
+            statement = connection.prepareStatement(sSqlStatement);
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()){
+                //WIP get number missing
+                return 1;
+            }
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+            return 0;
+        }
+        return 0;
     }
 }
 
