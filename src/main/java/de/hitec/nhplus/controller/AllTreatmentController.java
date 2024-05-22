@@ -85,13 +85,12 @@ public class AllTreatmentController {
         this.createComboBoxData();
     }
 
+    /**
+     * Initialisierung: Konfiguriert die TableView-Spalten und füllt die ComboBox mit Patientendaten.
+     * Listener: Fügt Listener hinzu, um das Löschen von Behandlungen zu aktivieren/deaktivieren, basierend auf der Auswahl.
+     * */
 
-    /*public static void initializeTreatmentsList() {
-        for (int i = 1; i <= 10; i++) {
-            Treatment treatment = new Treatment(i, "", "2024-05-20", "08:00", "09:00", "Treatment " + i);
-            allTreatments.add(treatment);
-        }
-    } */
+
 
     public static void initializeTreatmentsList() {
         for (int i = 1; i <= 10; i++) {
@@ -104,6 +103,11 @@ public class AllTreatmentController {
             allTreatments.add(treatment);
         }
     }
+
+    /**
+     * Erstellt und fügt 10 Behandlungsobjekte in eine statische Liste ein.
+     * @return
+     */
 
     public static ObservableList<Treatment> getAllTreatments() {
         return allTreatments;
@@ -123,6 +127,11 @@ public class AllTreatmentController {
         this.treatments.addAll(allTreatments);
     }
 
+    /**
+     * Lädt alle Behandlungen aus der Datenbank und fügt sie der Tabelle hinzu.
+     */
+
+
     private void createComboBoxData() {
         PatientDao dao = DaoFactory.getDaoFactory().createPatientDAO();
         try {
@@ -136,6 +145,9 @@ public class AllTreatmentController {
         }
     }
 
+    /**
+     * Lädt Patientendaten aus der Datenbank und fügt sie der Auswahl-ComboBox hinzu.
+     */
 
     @FXML
     public void handleComboBox() {
@@ -163,6 +175,11 @@ public class AllTreatmentController {
         this.treatments.addAll(allTreatments);
     }
 
+    /**
+     * Filtert die Behandlungen basierend auf der ausgewählten Patientenauswahl und zeigt die entsprechenden Behandlungen in der Tabelle an.
+     * @param surname
+     * @return
+     */
     private Patient searchInList(String surname) {
         for (Patient patient : this.patientList) {
             if (patient.getSurname().equals(surname)) {
@@ -171,6 +188,7 @@ public class AllTreatmentController {
         }
         return null;
     }
+
 
     @FXML
     public void handleDelete() {
@@ -183,6 +201,10 @@ public class AllTreatmentController {
             exception.printStackTrace();
         }
     }
+
+    /**
+     * Entfernt die ausgewählte Behandlung aus der Tabelle und löscht sie aus der Datenbank.
+     */
 
     @FXML
     public void handleNewTreatment() {
@@ -199,6 +221,10 @@ public class AllTreatmentController {
         }
     }
 
+    /**
+     * Öffnet ein neues Fenster zur Erstellung einer neuen Behandlung, nachdem ein Patient ausgewählt wurde.
+     */
+
     @FXML
     public void handleMouseClick() {
         tableView.setOnMouseClicked(event -> {
@@ -210,13 +236,17 @@ public class AllTreatmentController {
         });
     }
 
+    /**
+     * Öffnet ein Fenster zur Bearbeitung der Behandlung, wenn eine Behandlung in der Tabelle doppelt angeklickt wird.
+     *
+     * @param patient
+     */
     public void newTreatmentWindow(Patient patient) {
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("/de/hitec/nhplus/NewTreatmentView.fxml"));
             AnchorPane pane = loader.load();
             Scene scene = new Scene(pane);
 
-            // the primary stage should stay in the background
             Stage stage = new Stage();
 
             NewTreatmentController controller = loader.getController();
@@ -230,13 +260,20 @@ public class AllTreatmentController {
         }
     }
 
+
+    /**
+     *  Öffnet ein neues Fenster zur Erstellung einer neuen Behandlung.
+     */
+
+
+
     public void treatmentWindow(Treatment treatment){
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("/de/hitec/nhplus/TreatmentView.fxml"));
             AnchorPane pane = loader.load();
             Scene scene = new Scene(pane);
 
-            // the primary stage should stay in the background
+
             Stage stage = new Stage();
             TreatmentController controller = loader.getController();
             controller.initializeController(this, stage, treatment);
@@ -249,3 +286,7 @@ public class AllTreatmentController {
         }
     }
 }
+
+/**
+ * Öffnet ein Fenster zur Bearbeitung einer bestehenden Behandlung.
+ */

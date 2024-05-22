@@ -75,6 +75,15 @@ public class AllPatientController {
      * after loading an FXML-File. At this point of the lifecycle of the Controller, the fields can be accessed and
      * configured.
      */
+
+
+    /**
+     *
+     *
+     *
+     *
+     *
+     */
     public void initialize() {
         this.readAllAndShowInTableView();
 
@@ -97,8 +106,10 @@ public class AllPatientController {
         this.columnRoomNumber.setCellValueFactory(new PropertyValueFactory<>("roomNumber"));
         this.columnRoomNumber.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        //Anzeigen der Daten
+        //Anzeigen  der Daten
         this.tableView.setItems(this.patients);
+
+
 
         this.buttonDelete.setDisable(true);
         this.tableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Patient>() {
