@@ -5,5 +5,5 @@
 | Aufgabe        | Bearbeiter      |
 | ------- | ------------------ |
 | DeleteData | Bjarne |
-| Login | Felix und Fyn |
+| Login | Fyn |
 | UserStories | Alle |

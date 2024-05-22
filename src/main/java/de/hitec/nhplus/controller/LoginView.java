@@ -45,6 +45,13 @@ public class LoginView {
         this.connection = ConnectionBuilder.getConnection();
     }
 
+    /**
+     * Füllt die Liste mit SQL-Befehlen, die in den Benutzereingaben nicht erlaubt sein sollen.
+     * Stellt eine Verbindung zur Datenbank her, die durch ConnectionBuilder bereitgestellt wird.
+     *
+     * @param event
+     */
+
     @FXML
     private void logIn(ActionEvent event){
         loginSequenz();
@@ -75,15 +82,35 @@ public class LoginView {
         }
     }
 
+    /**
+     * Führt die notwendigen Schritte zur Anmeldung durch:
+     * Holt die Benutzereingaben (getInput).
+     * Überprüft die Eingaben auf unerlaubte Argumente (checkInput).
+     * Überprüft die Anmeldedaten in der Datenbank (checkLogin).
+     * Meldet den Benutzer an oder zeigt eine Fehlermeldung an.
+     *
+     */
+
     private void getInput(){
         this.Name = NameField.getText();
         this.Password = PasswordField.getText();
     }
 
+    /**
+     * Liest die Benutzereingaben aus den Textfeldern und speichert sie in den Variablen Name und Password.
+     *
+     */
+
     private void getHash(){
         this.Password = hash.getHash(Password);
         System.out.println(this.Password);
     }
+
+    /**
+     * Berechnet den Hash des Passworts. Diese Methode ist auskommentiert und wird derzeit nicht verwendet.
+     *
+     * @return
+     */
 
     private boolean checkInput() {
         for(int i = 0; i < IllegalArguments.size(); i++){
@@ -96,6 +123,12 @@ public class LoginView {
         }
         return true;
     }
+
+    /**
+     * Überprüft, ob die Benutzereingaben unerlaubte SQL-Befehle enthalten. Gibt false zurück, wenn unerlaubte Argumente gefunden werden.
+     *
+     * @return
+     */
 
     private boolean checkLogin(){
         PreparedStatement statement = null;
@@ -114,3 +147,8 @@ public class LoginView {
         return false;
     }
 }
+
+/**
+ * Führt eine SQL-Abfrage aus, um zu überprüfen, ob der Benutzername in der Datenbank vorhanden ist. Gibt true zurück, wenn ein Eintrag gefunden wird, ansonsten false.
+ *
+ */

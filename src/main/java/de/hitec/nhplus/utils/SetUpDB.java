@@ -15,16 +15,17 @@ import static de.hitec.nhplus.utils.DateConverter.convertStringToLocalDate;
 import static de.hitec.nhplus.utils.DateConverter.convertStringToLocalTime;
 
 /**
- * Call static class provides to static methods to set up and wipe the database. It uses the class ConnectionBuilder
- * and its path to build up the connection to the database. The class is executable. Executing the class will build
- * up a connection to the database and calls setUpDb() to wipe the database, build up a clean database and fill the
- * database with some test data.
+ * Die statische Klasse SetUpDB bietet zwei statische Methoden zum Einrichten und Löschen der Datenbank.
+ * Sie verwendet die Klasse ConnectionBuilder und ihren Pfad, um eine Verbindung zur Datenbank aufzubauen.
+ * Die Klasse ist ausführbar. Durch Ausführen der Klasse wird eine Verbindung zur Datenbank hergestellt
+ * und setUpDb() aufgerufen, um die Datenbank zu löschen, eine saubere Datenbank einzurichten und die
+ * Datenbank mit einigen Testdaten zu füllen.
  */
 public class SetUpDB {
 
     /**
-     * This method wipes the database by dropping the tables. Then the methods to set up the needed tables
-     * @param None
+     * Diese Methode löscht die Datenbank, indem sie die Tabellen löscht. Dann werden die Methoden
+     * zum Einrichten der benötigten Tabellen aufgerufen.
      */
     public static void setUpDb() {
         Connection connection = ConnectionBuilder.getConnection();
@@ -35,24 +36,20 @@ public class SetUpDB {
     }
 
     /**
-     * This method wipes the database by dropping the tables.
-     * @param connection
+     * Diese Methode löscht die Datenbank, indem sie die Tabellen löscht.
      */
     public static void wipeDb(Connection connection) {
-        
         try (Statement statement = connection.createStatement()) {
             statement.execute("DROP TABLE patient");
             statement.execute("DROP TABLE treatment");
         } catch (SQLException exception) {
             System.out.println(exception.getMessage());
         }
-        
     }
 
-        /**
-        * This Method set up the Table for the Patients
-        * @param connection
-        */
+    /**
+     * Diese Methode richtet die Tabelle für Patienten ein.
+     */
     private static void setUpTablePatient(Connection connection) {
         final String SQL = "CREATE TABLE IF NOT EXISTS patient (" +
                 "   pid INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -61,7 +58,6 @@ public class SetUpDB {
                 "   dateOfBirth TEXT NOT NULL, " +
                 "   carelevel TEXT NOT NULL, " +
                 "   roomnumber TEXT NOT NULL" +
-                "   roomnumber TEXT NOT NULL, " +
                 ");";
         try (Statement statement = connection.createStatement()) {
             statement.execute(SQL);
@@ -70,11 +66,8 @@ public class SetUpDB {
         }
     }
 
-
-
     /**
-     * This Method is for setting up the table for treatments
-     * @param connection
+     * Diese Methode richtet die Tabelle für Behandlungen ein.
      */
     private static void setUpTableTreatment(Connection connection) {
         final String SQL = "CREATE TABLE IF NOT EXISTS treatment (" +
@@ -99,6 +92,7 @@ public class SetUpDB {
      * This Method is for the Setup of the Patient Table
      * @param None
      */
+  
     private static void setUpPatients() {
         try {
             PatientDao dao = DaoFactory.getDaoFactory().createPatientDAO();
@@ -116,6 +110,7 @@ public class SetUpDB {
     /**
      * This Method is for the Setup of the Nurse Table
      * @param Connection
+     * Diese Methode richtet die Tabelle für Krankenschwestern ein.
      */
     private static void setUpTableNurse(Connection connection){
         final String SQL = "CREATE TABLE IF NOT EXISTS nurse (" +

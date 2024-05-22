@@ -4,6 +4,7 @@ import de.hitec.nhplus.Main;
 import de.hitec.nhplus.datastorage.DaoFactory;
 import de.hitec.nhplus.datastorage.PatientDao;
 import de.hitec.nhplus.datastorage.TreatmentDao;
+import de.hitec.nhplus.model.Nurse;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -18,6 +19,8 @@ import de.hitec.nhplus.model.Treatment;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class AllTreatmentController {
@@ -50,9 +53,16 @@ public class AllTreatmentController {
     private Button buttonDelete;
 
     private final ObservableList<Treatment> treatments = FXCollections.observableArrayList();
+    private final ObservableList<Nurse> nurse = FXCollections.observableArrayList();
     private TreatmentDao dao;
     private final ObservableList<String> patientSelection = FXCollections.observableArrayList();
     private ArrayList<Patient> patientList;
+
+    private static final ObservableList<Treatment> allTreatments = FXCollections.observableArrayList();
+
+    static {
+        initializeTreatmentsList();
+    }
 
     public void initialize() {
         readAllAndShowInTableView();
@@ -76,6 +86,35 @@ public class AllTreatmentController {
         this.createComboBoxData();
     }
 
+    /**
+     * Initialisierung: Konfiguriert die TableView-Spalten und füllt die ComboBox mit Patientendaten.
+     * Listener: Fügt Listener hinzu, um das Löschen von Behandlungen zu aktivieren/deaktivieren, basierend auf der Auswahl.
+     * */
+
+
+
+    public static void initializeTreatmentsList() {
+        for (int i = 1; i <= 10; i++) {
+            LocalDate date = LocalDate.of(2024, 5, 20);
+            LocalTime begin = LocalTime.of(8, 0);
+            LocalTime end = LocalTime.of(9, 0);
+            String description = "Treatment " + i;
+            String remarks = "Remarks " + i;
+            Treatment treatment = new Treatment(i, date, begin, end, description, remarks);
+            allTreatments.add(treatment);
+        }
+    }
+
+    /**
+     * Erstellt und fügt 10 Behandlungsobjekte in eine statische Liste ein.
+     * @return
+     */
+
+    public static ObservableList<Treatment> getAllTreatments() {
+        return allTreatments;
+    }
+
+
     public void readAllAndShowInTableView() {
         this.treatments.clear();
         comboBoxPatientSelection.getSelectionModel().select(0);
@@ -85,7 +124,14 @@ public class AllTreatmentController {
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
+        // Add treatments from the static list
+        this.treatments.addAll(allTreatments);
     }
+
+    /**
+     * Lädt alle Behandlungen aus der Datenbank und fügt sie der Tabelle hinzu.
+     */
+
 
     private void createComboBoxData() {
         PatientDao dao = DaoFactory.getDaoFactory().createPatientDAO();
@@ -100,6 +146,9 @@ public class AllTreatmentController {
         }
     }
 
+    /**
+     * Lädt Patientendaten aus der Datenbank und fügt sie der Auswahl-ComboBox hinzu.
+     */
 
     @FXML
     public void handleComboBox() {
@@ -123,8 +172,15 @@ public class AllTreatmentController {
                 exception.printStackTrace();
             }
         }
+        // Add treatments from the static list
+        this.treatments.addAll(allTreatments);
     }
 
+    /**
+     * Filtert die Behandlungen basierend auf der ausgewählten Patientenauswahl und zeigt die entsprechenden Behandlungen in der Tabelle an.
+     * @param surname
+     * @return
+     */
     private Patient searchInList(String surname) {
         for (Patient patient : this.patientList) {
             if (patient.getSurname().equals(surname)) {
@@ -133,6 +189,7 @@ public class AllTreatmentController {
         }
         return null;
     }
+
 
     @FXML
     public void handleDelete() {
@@ -145,6 +202,10 @@ public class AllTreatmentController {
             exception.printStackTrace();
         }
     }
+
+    /**
+     * Entfernt die ausgewählte Behandlung aus der Tabelle und löscht sie aus der Datenbank.
+     */
 
     @FXML
     public void handleNewTreatment() {
@@ -161,6 +222,10 @@ public class AllTreatmentController {
         }
     }
 
+    /**
+     * Öffnet ein neues Fenster zur Erstellung einer neuen Behandlung, nachdem ein Patient ausgewählt wurde.
+     */
+
     @FXML
     public void handleMouseClick() {
         tableView.setOnMouseClicked(event -> {
@@ -172,13 +237,17 @@ public class AllTreatmentController {
         });
     }
 
+    /**
+     * Öffnet ein Fenster zur Bearbeitung der Behandlung, wenn eine Behandlung in der Tabelle doppelt angeklickt wird.
+     *
+     * @param patient
+     */
     public void newTreatmentWindow(Patient patient) {
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("/de/hitec/nhplus/NewTreatmentView.fxml"));
             AnchorPane pane = loader.load();
             Scene scene = new Scene(pane);
 
-            // the primary stage should stay in the background
             Stage stage = new Stage();
 
             NewTreatmentController controller = loader.getController();
@@ -192,13 +261,20 @@ public class AllTreatmentController {
         }
     }
 
+
+    /**
+     *  Öffnet ein neues Fenster zur Erstellung einer neuen Behandlung.
+     */
+
+
+
     public void treatmentWindow(Treatment treatment){
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("/de/hitec/nhplus/TreatmentView.fxml"));
             AnchorPane pane = loader.load();
             Scene scene = new Scene(pane);
 
-            // the primary stage should stay in the background
+
             Stage stage = new Stage();
             TreatmentController controller = loader.getController();
             controller.initializeController(this, stage, treatment);
@@ -211,3 +287,7 @@ public class AllTreatmentController {
         }
     }
 }
+
+/**
+ * Öffnet ein Fenster zur Bearbeitung einer bestehenden Behandlung.
+ */

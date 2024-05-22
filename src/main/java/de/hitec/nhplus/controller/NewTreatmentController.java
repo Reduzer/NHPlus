@@ -72,10 +72,22 @@ public class NewTreatmentController {
         this.showPatientData();
     }
 
+    /**
+     *Controller, patient, stage sind Verweise auf den übergeordneten Controller, den aktuellen Patienten und das aktuelle Fenster.
+     *Diese Methode initialisiert den Controller, setzt den buttonAdd-Button auf deaktiviert und fügt Listener für die Eingabefelder hinzu, um die Validierung der Eingaben zu ermöglichen.
+     *Listener: Überwachen die Änderungen in den Textfeldern und dem DatePicker, um den buttonAdd-Button entsprechend zu aktivieren oder zu deaktivieren.
+     *StringConverter: Konvertiert LocalDate zu String und umgekehrt für den DatePicker.
+     * showPatientData: Zeigt die Patientendaten in den Labels an.
+     */
+
     private void showPatientData(){
         this.labelFirstName.setText(patient.getFirstName());
         this.labelSurname.setText(patient.getSurname());
     }
+
+    /**
+     * showPatientData: Setzt die Labels labelFirstName und labelSurname auf die entsprechenden Werte des Patienten.
+     */
 
     @FXML
     public void handleAdd(){
@@ -90,6 +102,15 @@ public class NewTreatmentController {
         stage.close();
     }
 
+    /**
+     * handleAdd: Diese Methode wird aufgerufen, wenn der buttonAdd-Button gedrückt wird.
+     * Local Variables: Liest die Eingaben des Benutzers aus den Textfeldern und dem DatePicker.
+     * Treatment-Objekt: Erstellt ein neues Treatment-Objekt mit den eingelesenen Daten
+     * createTreatment: Fügt die Behandlung zur Datenbank hinzu.
+     * Aktualisierung: Aktualisiert die Ansicht der Behandlungen im übergeordneten Controller und schließt das Fenster.
+     * @param treatment
+     */
+
     private void createTreatment(Treatment treatment) {
         TreatmentDao dao = DaoFactory.getDaoFactory().createTreatmentDao();
         try {
@@ -97,12 +118,25 @@ public class NewTreatmentController {
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
+        AllTreatmentController.getAllTreatments().add(treatment);
     }
+
+    /**
+     * createTreatment: Diese Methode fügt die neue Behandlung zur Datenbank hinzu und aktualisiert die statische Liste der Behandlungen.
+     * DAO: Verwendet TreatmentDao für den Datenbankzugriff.
+     * Falls ein SQL-Fehler auftritt, wird der Stack-Trace ausgegeben.
+     * Fügt die neue Behandlung zur Liste allTreatments hinzu.
+     */
 
     @FXML
     public void handleCancel(){
         stage.close();
     }
+
+    /**
+     * handleCancel: Schließt das aktuelle Fenster, wenn der Abbrechen-Button gedrückt wird.
+     * @return
+     */
 
     private boolean areInputDataInvalid() {
         if (this.textFieldBegin.getText() == null || this.textFieldEnd.getText() == null) {
@@ -119,4 +153,12 @@ public class NewTreatmentController {
         }
         return this.textFieldDescription.getText().isBlank() || this.datePicker.getValue() == null;
     }
+
+    /**
+     * areInputDataInvalid: Diese Methode überprüft, ob die Eingabedaten gültig sind.
+     * Prüfung der Textfelder: Überprüft, ob textFieldBegin und textFieldEnd nicht null sind und ob textFieldDescription nicht leer ist.
+     * Konvertiert die Eingaben in LocalTime und überprüft, ob die Endzeit nach der Beginnzeit liegt.
+     * Überprüft, ob ein Datum ausgewählt wurde.
+     * Gibt true zurück, wenn eine der Prüfungen fehlschlägt, ansonsten false.
+     */
 }
