@@ -14,13 +14,16 @@ import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 
-public class
-Main extends Application {
+public class Main extends Application {
 
+    // Statische Variable für die primäre Bühne
     private static Stage primaryStage;
+    // Variable für die Anmeldebühne
     private Stage loginStage;
+    // FXMLLoader-Objekt zum Laden von FXML-Dateien
     private static FXMLLoader loader;
 
+    // Überschriebene Startmethode der Anwendung
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -28,16 +31,18 @@ Main extends Application {
         loginLoad();
     }
 
+    // Methode zum Überprüfen der Benutzereingabe
     public static void checkInput(boolean value, Stage stage){
         if(value == true){
             mainWindow();
             stage.close();
         }
         else{
-            JOptionPane.showMessageDialog(null, "Something went wrong");
+            JOptionPane.showMessageDialog(null, "Etwas ist schiefgelaufen");
         }
     }
 
+    // Methode zum Anzeigen des Hauptfensters
     public static void mainWindow() {
         try {
             loader = new FXMLLoader(Main.class.getResource("/de/hitec/nhplus/MainWindowView.fxml"));
@@ -49,6 +54,7 @@ Main extends Application {
             primaryStage.setResizable(false);
             primaryStage.show();
 
+            // Ereignisbehandlung für das Schließen des Hauptfensters
             primaryStage.setOnCloseRequest(event -> {
                 ConnectionBuilder.closeConnection();
                 Platform.exit();
@@ -59,6 +65,7 @@ Main extends Application {
         }
     }
 
+    // Methode zum Laden der Anmeldeseite
     public void loginLoad(){
         try{
             loginStage = new Stage();
@@ -74,10 +81,11 @@ Main extends Application {
             stage.setResizable(false);
             stage.show();
 
+            // Ereignisbehandlung für das Schließen der Anmeldeseite
             loginStage.setOnCloseRequest(event -> {
-                    ConnectionBuilder.closeConnection();
-                    Platform.exit();
-                    System.exit(0);
+                ConnectionBuilder.closeConnection();
+                Platform.exit();
+                System.exit(0);
             });
         }
         catch(Exception e){
@@ -85,6 +93,7 @@ Main extends Application {
         }
     }
 
+    // Hauptmethode zum Starten der Anwendung
     public static void main(String[] args) {
         launch(args);
     }

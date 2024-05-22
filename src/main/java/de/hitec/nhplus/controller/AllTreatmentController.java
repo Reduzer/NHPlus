@@ -22,15 +22,11 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class AllTreatmentController {
 
     @FXML
     private TableView<Treatment> tableView;
-
-    @FXML
-    private TableView<Nurse> nurseView;
 
     @FXML
     private TableColumn<Treatment, Integer> columnId;
@@ -51,15 +47,13 @@ public class AllTreatmentController {
     private TableColumn<Treatment, String> columnDescription;
 
     @FXML
-    private TableColumn<Nurse, String> columnNid;
-
-    @FXML
     private ComboBox<String> comboBoxPatientSelection;
 
     @FXML
     private Button buttonDelete;
 
     private final ObservableList<Treatment> treatments = FXCollections.observableArrayList();
+    private final ObservableList<Nurse> nurse = FXCollections.observableArrayList();
     private TreatmentDao dao;
     private final ObservableList<String> patientSelection = FXCollections.observableArrayList();
     private ArrayList<Patient> patientList;
@@ -68,10 +62,6 @@ public class AllTreatmentController {
 
     static {
         initializeTreatmentsList();
-    }
-
-    public AllTreatmentController(TableView<Nurse> nurseView) {
-        this.nurseView = nurseView;
     }
 
     public void initialize() {
@@ -86,9 +76,6 @@ public class AllTreatmentController {
         this.columnEnd.setCellValueFactory(new PropertyValueFactory<>("end"));
         this.columnDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         this.tableView.setItems(this.treatments);
-
-        this.columnNid.setCellValueFactory(new PropertyValueFactory<>("nid"));
-        this.tableView.setItems(this.nurseView);
 
         // Disabling the button to delete treatments as long, as no treatment was selected.
         this.buttonDelete.setDisable(true);
