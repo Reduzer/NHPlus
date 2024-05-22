@@ -55,6 +55,11 @@ public class TreatmentController {
         }
     }
 
+    /**
+     * initializeController: Diese Methode initialisiert den Controller mit dem übergeordneten Controller, dem aktuellen Fenster und der zu bearbeitenden Behandlung.
+     * Ruft die Daten des Patienten aus der Datenbank ab und zeigt sie an.
+     */
+
     private void showData(){
         this.labelPatientName.setText(patient.getSurname()+", "+patient.getFirstName());
         this.labelCareLevel.setText(patient.getCareLevel());
@@ -65,6 +70,11 @@ public class TreatmentController {
         this.textFieldDescription.setText(this.treatment.getDescription());
         this.textAreaRemarks.setText(this.treatment.getRemarks());
     }
+
+    /**
+     * showData: Diese Methode zeigt die Daten der zu bearbeitenden Behandlung und des zugehörigen Patienten in den entsprechenden UI-Elementen an.
+     */
+
 
     @FXML
     public void handleChange(){
@@ -77,6 +87,14 @@ public class TreatmentController {
         controller.readAllAndShowInTableView();
         stage.close();
     }
+
+    /**
+     * handleChange: Diese Methode wird aufgerufen, wenn Änderungen vorgenommen und gespeichert werden sollen.
+     * Aktualisiert die Eigenschaften der Behandlung mit den neuen Benutzereingaben.
+     * Aktualisiert die Behandlung in der Datenbank.
+     * Ruft die Methode readAllAndShowInTableView() des übergeordneten Controllers auf, um die Ansicht der Behandlungen zu aktualisieren.
+     * Schließt das Fenster nach dem Speichern der Änderungen.
+     */
 
     private void doUpdate(){
         TreatmentDao dao = DaoFactory.getDaoFactory().createTreatmentDao();
@@ -91,8 +109,17 @@ public class TreatmentController {
         }
     }
 
+    /**
+     * doUpdate: Diese Methode führt das eigentliche Update der Behandlung in der Datenbank durch und aktualisiert auch die statische Liste aller Behandlungen.
+     */
+
     @FXML
     public void handleCancel(){
         stage.close();
     }
+
+    /**
+     * handleCancel: Diese Methode wird aufgerufen, wenn die Bearbeitung abgebrochen und das Fenster geschlossen werden soll.
+     *
+     */
 }
