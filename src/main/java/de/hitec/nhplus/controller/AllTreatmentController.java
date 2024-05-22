@@ -4,6 +4,7 @@ import de.hitec.nhplus.Main;
 import de.hitec.nhplus.datastorage.DaoFactory;
 import de.hitec.nhplus.datastorage.PatientDao;
 import de.hitec.nhplus.datastorage.TreatmentDao;
+import de.hitec.nhplus.model.Nurse;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -29,6 +30,9 @@ public class AllTreatmentController {
     private TableView<Treatment> tableView;
 
     @FXML
+    private TableView<Nurse> nurseView;
+
+    @FXML
     private TableColumn<Treatment, Integer> columnId;
 
     @FXML
@@ -47,6 +51,9 @@ public class AllTreatmentController {
     private TableColumn<Treatment, String> columnDescription;
 
     @FXML
+    private TableColumn<Nurse, String> columnNid;
+
+    @FXML
     private ComboBox<String> comboBoxPatientSelection;
 
     @FXML
@@ -63,6 +70,10 @@ public class AllTreatmentController {
         initializeTreatmentsList();
     }
 
+    public AllTreatmentController(TableView<Nurse> nurseView) {
+        this.nurseView = nurseView;
+    }
+
     public void initialize() {
         readAllAndShowInTableView();
         comboBoxPatientSelection.setItems(patientSelection);
@@ -75,6 +86,9 @@ public class AllTreatmentController {
         this.columnEnd.setCellValueFactory(new PropertyValueFactory<>("end"));
         this.columnDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         this.tableView.setItems(this.treatments);
+
+        this.columnNid.setCellValueFactory(new PropertyValueFactory<>("nid"));
+        this.tableView.setItems(this.nurseView);
 
         // Disabling the button to delete treatments as long, as no treatment was selected.
         this.buttonDelete.setDisable(true);
