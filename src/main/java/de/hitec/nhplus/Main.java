@@ -23,6 +23,12 @@ public class Main extends Application {
     // FXMLLoader-Objekt zum Laden von FXML-Dateien
     private static FXMLLoader loader;
 
+
+    /**
+     * This calls the method for login
+     * @param Stage
+     */
+  
     // Überschriebene Startmethode der Anwendung
     @Override
     public void start(Stage primaryStage) {
@@ -30,6 +36,12 @@ public class Main extends Application {
         loader = new FXMLLoader();
         loginLoad();
     }
+
+
+    /**
+     * This method closes the Login Page and calls the mainWindow method
+     * @param Boolean and Stage
+     */
 
     // Methode zum Überprüfen der Benutzereingabe
     public static void checkInput(boolean value, Stage stage){
@@ -42,6 +54,12 @@ public class Main extends Application {
         }
     }
 
+
+    /**
+     * This Method loades the Main Page, with which the User interacts
+     * @param None
+     */
+  
     // Methode zum Anzeigen des Hauptfensters
     public static void mainWindow() {
         try {
@@ -64,6 +82,12 @@ public class Main extends Application {
             exception.printStackTrace();
         }
     }
+
+
+    /**
+     * This Method Loades the Login Page, from which the user has to sign into the Project
+     * @param None
+     */
 
     // Methode zum Laden der Anmeldeseite
     public void loginLoad(){
@@ -92,6 +116,12 @@ public class Main extends Application {
             e.printStackTrace();
         }
     }
+
+
+    /**
+     *  The Main method of the Project
+     * @param args
+     */
 
     // Hauptmethode zum Starten der Anwendung
     public static void main(String[] args) {

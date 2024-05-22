@@ -139,4 +139,8 @@ public class NurseDao extends DaoImp<Nurse> {
     protected PreparedStatement deleteOldTreatment(long key) {
         return null;
     }
+
+    public void update(Nurse rowValue) {
+
+    }
 }

@@ -15,6 +15,7 @@ public class Nurse extends Person {
     private List<Permission> m_UserPermission = new ArrayList<Permission>() {};
     private List<Treatment> m_treatmentsAssigned = new ArrayList<Treatment>() {};
     private Treatment m_CurrentTreatment;
+    private String load;
 
     /**
      * Standardkonstruktor für Nurse
@@ -96,5 +97,31 @@ public class Nurse extends Person {
      */
     public List<Treatment> getTreatmentsAssigned() {
         return m_treatmentsAssigned;
+    }
+
+
+    private void calcLoad(){
+        int size = m_treatmentsAssigned.size();
+        
+        if(size < 3){
+            load = "light";
+        }
+        else{
+            if(size < 5){
+                load = "medium";
+            }
+            else{
+                if(size < 10){
+                    load = "heavy";
+                }
+                else{
+                    load = "extreme";
+                }
+            }
+        }
+    }
+
+    public String getLoad(){
+        return load;
     }
 }
