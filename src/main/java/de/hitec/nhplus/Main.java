@@ -10,20 +10,32 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 
 public class Main extends Application {
 
-    private Stage primaryStage;
+    // Statische Variable für die primäre Bühne
+    private static Stage primaryStage;
+    // Variable für die Anmeldebühne
     private Stage loginStage;
     private FXMLLoader loader;
     private static int Permissions;
     private static boolean loggedIn = false;
-    public static void setLoggedIn(boolean loggedInBool){
+    public static void setLoggedIn(boolean loggedInBool) {
         loggedIn = loggedInBool;
     }
+  
+    // FXMLLoader-Objekt zum Laden von FXML-Dateien
+    private static FXMLLoader loader;
 
+    /**
+     * This calls the method for login
+     * @param Stage
+     */
+  
+    // Überschriebene Startmethode der Anwendung
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -31,18 +43,43 @@ public class Main extends Application {
         loginLoad();
     }
 
-    public void mainWindow() {
+
+    /**
+     * This method closes the Login Page and calls the mainWindow method
+     * @param Boolean and Stage
+     */
+
+    // Methode zum Überprüfen der Benutzereingabe
+    public static void checkInput(boolean value, Stage stage){
+        if(value == true){
+            mainWindow();
+            stage.close();
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Etwas ist schiefgelaufen");
+        }
+    }
+
+
+    /**
+     * This Method loades the Main Page, with which the User interacts
+     * @param None
+     */
+  
+    // Methode zum Anzeigen des Hauptfensters
+    public static void mainWindow() {
         try {
             loader = new FXMLLoader(Main.class.getResource("/de/hitec/nhplus/MainWindowView.fxml"));
             BorderPane pane = loader.load();
 
             Scene scene = new Scene(pane);
-            this.primaryStage.setTitle("NHPlus");
-            this.primaryStage.setScene(scene);
-            this.primaryStage.setResizable(false);
-            this.primaryStage.show();
+            primaryStage.setTitle("NHPlus");
+            primaryStage.setScene(scene);
+            primaryStage.setResizable(false);
+            primaryStage.show();
 
-            this.primaryStage.setOnCloseRequest(event -> {
+            // Ereignisbehandlung für das Schließen des Hauptfensters
+            primaryStage.setOnCloseRequest(event -> {
                 ConnectionBuilder.closeConnection();
                 Platform.exit();
                 System.exit(0);
@@ -52,6 +89,13 @@ public class Main extends Application {
         }
     }
 
+
+    /**
+     * This Method Loades the Login Page, from which the user has to sign into the Project
+     * @param None
+     */
+
+    // Methode zum Laden der Anmeldeseite
     public void loginLoad(){
         try{
             loginStage = new Stage();
@@ -67,21 +111,18 @@ public class Main extends Application {
             stage.setResizable(false);
             stage.show();
 
+            // Ereignisbehandlung für das Schließen der Anmeldeseite
             loginStage.setOnCloseRequest(event -> {
-                if(loggedIn){
-                    mainWindow();
-                }
-                else{
-                    ConnectionBuilder.closeConnection();
-                    Platform.exit();
-                    System.exit(0);
-                }
+                ConnectionBuilder.closeConnection();
+                Platform.exit();
+                System.exit(0);
             });
         }
         catch(Exception e){
             e.printStackTrace();
         }
     }
+
 
     public static int getPermissions() {
         return Permissions;
@@ -91,6 +132,12 @@ public class Main extends Application {
         Permissions = permissions;
     }
 
+    /**
+     *  The Main method of the Project
+     * @param args
+     */
+
+    // Hauptmethode zum Starten der Anwendung
     public static void main(String[] args) {
         launch(args);
     }

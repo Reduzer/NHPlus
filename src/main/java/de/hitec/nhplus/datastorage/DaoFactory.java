@@ -30,4 +30,6 @@ public class DaoFactory {
         // Gibt ein neues PatientDao-Objekt zurück, das mit der Datenbankverbindung initialisiert wird
         return new PatientDao(ConnectionBuilder.getConnection());
     }
+
+    public NurseDao createNurseDao() { return new NurseDao(ConnectionBuilder.getConnection()); }
 }

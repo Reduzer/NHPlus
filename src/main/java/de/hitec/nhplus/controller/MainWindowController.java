@@ -27,6 +27,12 @@ public class MainWindowController {
         }
     }
 
+    /**
+     * Diese Methode wird aufgerufen, wenn das Ereignis event (z.B. ein Button-Klick) ausgelöst wird.
+     *
+     * @param event
+     */
+
     @FXML
     private void handleShowAllTreatments(ActionEvent event) {
         if (Main.getPermissions() > 1) {
@@ -41,6 +47,12 @@ public class MainWindowController {
         }
     }
 
+    /**
+     * Funktioniert ähnlich wie handleShowAllPatient, lädt jedoch die AllTreatmentView.fxml, die die Behandlungsansicht definiert.
+     *
+     * @param actionEvent
+     */
+
     @FXML
     public void handleShowAllNurses (ActionEvent event){
         if (Main.getPermissions() > 1) {
@@ -54,4 +66,8 @@ public class MainWindowController {
             System.out.println("Dazu bist du nicht berechtigt");
         }
     }
+  
+    /**
+     * Diese Methode wird aufgerufen, um die Ansicht der Pflegekräfte anzuzeigen. Sie lädt die AllCaregiverView.fxml in den zentralen Bereich des mainBorderPane.
+     */
 }

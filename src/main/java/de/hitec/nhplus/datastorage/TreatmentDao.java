@@ -170,6 +170,89 @@ public class TreatmentDao extends DaoImp<Treatment> {
     }
 }
 
+
 /**
  * Generiert ein <code>PreparedStatement</code>, um die gegebene Behandlung zu aktualisieren, identifiziert
 */
+
+    /**
+     * Generates a <code>PreparedStatement</code> to update the given treatment, identified
+     * by the id of the treatment (tid).
+     *
+     * @param treatment Treatment object to update.
+     * @return <code>PreparedStatement</code> to update the given treatment.
+     */
+    @Override
+    protected PreparedStatement getUpdateStatement(Treatment treatment) {
+        PreparedStatement preparedStatement = null;
+        try {
+            final String SQL =
+                    "UPDATE treatment SET " +
+                            "pid = ?, " +
+                            "treatment_date = ?, " +
+                            "begin = ?, " +
+                            "end = ?, " +
+                            "description = ?, " +
+                            "remark = ? " +
+                            "WHERE tid = ?";
+            preparedStatement = this.connection.prepareStatement(SQL);
+            preparedStatement.setLong(1, treatment.getPid());
+            preparedStatement.setString(2, treatment.getDate());
+            preparedStatement.setString(3, treatment.getBegin());
+            preparedStatement.setString(4, treatment.getEnd());
+            preparedStatement.setString(5, treatment.getDescription());
+            preparedStatement.setString(6, treatment.getRemarks());
+            preparedStatement.setLong(7, treatment.getTid());
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return preparedStatement;
+    }
+
+    /**
+     * Generates a <code>PreparedStatement</code> to delete a treatment with the given id.
+     *
+     * @param tid Id of the Treatment to delete.
+     * @return <code>PreparedStatement</code> to delete treatment with the given id.
+     */
+    @Override
+    protected PreparedStatement getDeleteStatement(long tid) {
+        PreparedStatement preparedStatement = null;
+        try {
+            final String SQL =
+                    "DELETE FROM treatment WHERE tid = ?";
+            preparedStatement = this.connection.prepareStatement(SQL);
+            preparedStatement.setLong(1, tid);
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return preparedStatement;
+    }
+
+    @Override
+    protected PreparedStatement deleteOldTreatment(long key) {
+        return null;
+    }
+
+
+    public void deleteOldTreatment() {
+        try {
+            LocalDate tenYearsAgo = LocalDate.now().minusYears(10);
+            ArrayList<Treatment> treatmentsToDelete = new ArrayList<>();
+            for (Treatment treatment : readAll()) {
+            if (treatment.getDate() == String.valueOf(tenYearsAgo)) {
+                treatmentsToDelete.add(treatment);
+            }
+
+            }
+            for (Treatment treatment : treatmentsToDelete) {
+                deleteById(treatment.getTid());
+            }
+        }catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+
+    }
+
+
+}
