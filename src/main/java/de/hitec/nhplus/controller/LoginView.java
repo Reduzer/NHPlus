@@ -130,5 +130,6 @@ public class LoginView {
             e.printStackTrace();
             return 0;
         }
+        return 0;
     }
 }
