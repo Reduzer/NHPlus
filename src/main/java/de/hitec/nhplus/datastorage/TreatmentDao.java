@@ -100,21 +100,6 @@ public class TreatmentDao extends DaoImp<Treatment> {
         return statement;
     }
 
-    @Override
-    protected PreparedStatement getUpdateStatement(Treatment treatment) {
-        return null;
-    }
-
-    @Override
-    protected PreparedStatement getDeleteStatement(long key) {
-        return null;
-    }
-
-    @Override
-    protected PreparedStatement deleteOldTreatment(long key) {
-        return null;
-    }
-
     /**
      * Mapped ein <code>ResultSet</code> aller Behandlungen zu einer <code>ArrayList</code> mit Objekten der Klasse
      * <code>Treatment</code>.
@@ -168,8 +153,6 @@ public class TreatmentDao extends DaoImp<Treatment> {
         ResultSet result = getReadAllTreatmentsOfOnePatientByPid(pid).executeQuery();
         return getListFromResultSet(result);
     }
-}
-
 
 /**
  * Generiert ein <code>PreparedStatement</code>, um die gegebene Behandlung zu aktualisieren, identifiziert
