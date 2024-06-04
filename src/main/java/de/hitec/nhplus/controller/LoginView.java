@@ -64,10 +64,11 @@ public class LoginView {
         System.out.println(Name + " " + Password);
 
         if(checkInput()){
-            getHash();
+            //getHash();
 
             if(checkLogin()){
                 System.out.println("Login Successful");
+                Main.setPermissions(getPermissions());
                 Main.setLoggedIn(true);
                 Stage stage = (Stage) PasswordField.getScene().getWindow();
                 Main.checkInput(true, stage);

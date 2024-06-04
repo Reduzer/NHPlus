@@ -21,10 +21,14 @@ public class Main extends Application {
     // Variable für die Anmeldebühne
     private Stage loginStage;
     private FXMLLoader loader;
+    private static int Permissions;
     private static boolean loggedIn = false;
     public static void setLoggedIn(boolean loggedInBool) {
         loggedIn = loggedInBool;
     }
+  
+    // FXMLLoader-Objekt zum Laden von FXML-Dateien
+    private static FXMLLoader loader;
 
     /**
      * This calls the method for login
@@ -39,13 +43,14 @@ public class Main extends Application {
         loginLoad();
     }
 
+
     /**
      * This method closes the Login Page and calls the mainWindow method
      * @param Boolean and Stage
      */
 
     // Methode zum Überprüfen der Benutzereingabe
-    public void checkInput(boolean value, Stage stage){
+    public static void checkInput(boolean value, Stage stage){
         if(value == true){
             mainWindow();
             stage.close();
@@ -62,7 +67,7 @@ public class Main extends Application {
      */
   
     // Methode zum Anzeigen des Hauptfensters
-    public void mainWindow() {
+    public static void mainWindow() {
         try {
             loader = new FXMLLoader(Main.class.getResource("/de/hitec/nhplus/MainWindowView.fxml"));
             BorderPane pane = loader.load();
@@ -118,6 +123,14 @@ public class Main extends Application {
         }
     }
 
+
+    public static int getPermissions() {
+        return Permissions;
+    }
+
+    public static void setPermissions(int permissions) {
+        Permissions = permissions;
+    }
 
     /**
      *  The Main method of the Project
