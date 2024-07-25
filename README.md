@@ -1,7 +1,5 @@
-# NHPlus
+# NHPLus
 
-School project in which we were supposed to be editing an already existing java programm.
+WIP
 
-We had multiple tasks we had to implement
-
-this is our try to do this
+Reworking everything rn LOL
