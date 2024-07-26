@@ -3,13 +3,16 @@ package de.hitec.nhplus.LogIn;
 import de.hitec.nhplus.datastorage.ConnectionBuilder;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class LoginHandler {
 
     private String sName, sPassword;
 
-    private hashing hashing = new hashing();
+    private hashing m_Hashing = new hashing();
     private Connection m_Connection;
 
     private ArrayList<String> IllegalArguments = new ArrayList<String>();
@@ -31,9 +34,20 @@ public class LoginHandler {
         this.sName = sInputName;
         this.sPassword = sInputPassword;
 
-        checkForIllegalArguments();
+        if(!checkForIllegalArguments()){
+            return false;
+        }
 
-        return false;
+        //Not used for debug purposes
+        //sPassword = m_Hashing.getHash(sPassword);
+
+        if(checkLogin()){
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     private boolean checkForIllegalArguments(){
@@ -49,5 +63,23 @@ public class LoginHandler {
             }
         }
         return true;
+    }
+
+    private boolean checkLogin(){
+        PreparedStatement statement = null;
+        try{
+            final String sSQLCommand = "SELECT Password FROM nurse WHERE Fname = '" + sName + "'";
+            statement = m_Connection.prepareStatement(sSQLCommand);
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()){
+                return true;
+            }
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+
+        return false;
     }
 }

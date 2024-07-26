@@ -31,6 +31,8 @@ public class LoginView
     private String sName;
     private String sPassword;
 
+    private LoginHandler m_LoginHandler = new LoginHandler();
+
     @FXML
     private void logIn(ActionEvent event){
         loginSequenz();
@@ -41,7 +43,7 @@ public class LoginView
 
         getInput();
 
-            if(checkLogin()){
+            if(m_LoginHandler.LoginUser(sName, sPassword)){
                 Stage stage = (Stage) PasswordField.getScene().getWindow();
             }
             else{
@@ -52,22 +54,5 @@ public class LoginView
     private void getInput(){
         this.sName = NameField.getText();
         this.sPassword = PasswordField.getText();
-    }
-
-    private boolean checkLogin(){
-        PreparedStatement statement = null;
-        try{
-            final String sSQLCommand = "SELECT Password FROM nurse WHERE Fname = '" + Name + "'";
-            statement = connection.prepareStatement(sSQLCommand);
-            ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next()){
-                return true;
-            }
-        }
-        catch(SQLException e){
-            e.printStackTrace();
-        }
-
-        return false;
     }
 }

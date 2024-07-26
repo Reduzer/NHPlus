@@ -17,7 +17,6 @@ import java.net.URL;
 public class Main extends Application {
 
     private static Stage m_PrimaryStage;
-    private Stage m_LoginStage;
     private static FXMLLoader m_Loader;
 
     @Override
@@ -50,7 +49,7 @@ public class Main extends Application {
 
     public void loginLoad(){
         try{
-            m_LoginStage = new Stage();
+            Stage m_LoginStage = new Stage();
 
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/de/hitec/nhplus/LoginView.fxml"));
