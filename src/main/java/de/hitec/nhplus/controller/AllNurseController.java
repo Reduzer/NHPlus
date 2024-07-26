@@ -27,7 +27,7 @@ public class AllNurseController {
     private TableView<Nurse> tableView;
 
     @FXML
-    private TableColumn<Nurse, Integer> colId;
+    private TableColumn<Nurse, Integer> colID;
 
     @FXML
     private TableColumn<Nurse, String> colFirstName;
@@ -56,18 +56,16 @@ public class AllNurseController {
     @FXML
     private TextField txfFirstName;
 
-    private final ObservableList<Nurse> nurses = FXCollections.observableArrayList();
-    private NurseDao dao;
 
-    /**
-     * Initializes / fills the View of the All Nurse View
-     * @param None
-     */
+
+    private final ObservableList<Nurse> nurses = FXCollections.observableArrayList();
+
+    private NurseDao dao;
 
     public void initialize() {
         this.readAllAndShowInTableView();
 
-        this.colId.setCellValueFactory(new PropertyValueFactory<>("nPersonalNumber"));
+        this.colID.setCellValueFactory(new PropertyValueFactory<>("nPersonalNumber"));
 
         // CellValueFactory to show property values in TableView
         this.colFirstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
@@ -76,6 +74,9 @@ public class AllNurseController {
 
         this.colSurname.setCellValueFactory(new PropertyValueFactory<>("surname"));
         this.colSurname.setCellFactory(TextFieldTableCell.forTableColumn());
+
+        this.colCurrentLoads.setCellValueFactory(new PropertyValueFactory<>("load"));
+        this.colCurrentLoads.setCellFactory(TextFieldTableCell.forTableColumn());
 
         //Anzeigen der Daten
         this.tableView.setItems(this.nurses);
@@ -95,33 +96,18 @@ public class AllNurseController {
         this.txfFirstName.textProperty().addListener(inputNewPatientListener);
     }
 
-    /**
-     * When a cell of the column with first names was changed, this method will be called, to persist the change.
-     *
-     * @param event Event including the changed object and the change.
-     */
     @FXML
     public void handleOnEditFirstname(TableColumn.CellEditEvent<Nurse, String> event) {
         event.getRowValue().setFirstName(event.getNewValue());
         this.doUpdate(event);
     }
 
-    /**
-     * When a cell of the column with surnames was changed, this method will be called, to persist the change.
-     *
-     * @param event Event including the changed object and the change.
-     */
     @FXML
     public void handleOnEditSurname(TableColumn.CellEditEvent<Nurse, String> event) {
         event.getRowValue().setSurname(event.getNewValue());
         this.doUpdate(event);
     }
 
-    /**
-     * Updates a patient by calling the method <code>update()</code> of {@link PatientDao}.
-     *
-     * @param event Event including the changed object and the change.
-     */
     private void doUpdate(TableColumn.CellEditEvent<Nurse, String> event) {
         try {
             this.dao.update(event.getRowValue());
@@ -130,10 +116,6 @@ public class AllNurseController {
         }
     }
 
-    /**
-     * Reloads all patients to the table by clearing the list of all patients and filling it again by all persisted
-     * patients, delivered by {@link PatientDao}.
-     */
     private void readAllAndShowInTableView() {
         this.nurses.clear();
         this.dao = DaoFactory.getDaoFactory().createNurseDao();
@@ -144,11 +126,6 @@ public class AllNurseController {
         }
     }
 
-    /**
-     * This method handles events fired by the button to delete patients. It calls {@link PatientDao} to delete the
-     * patient from the database and removes the object from the list, which is the data source of the
-     * <code>TableView</code>.
-     */
     @FXML
     public void handleDelete() {
         Nurse selectedItem = this.tableView.getSelectionModel().getSelectedItem();
@@ -162,11 +139,6 @@ public class AllNurseController {
         }
     }
 
-    /**
-     * This method handles the events fired by the button to add a patient. It collects the data from the
-     * <code>TextField</code>s, creates an object of class <code>Patient</code> of it and passes the object to
-     * {@link PatientDao} to persist the data.
-     */
     @FXML
     public void handleAdd() {
         String surname = this.txfSurname.getText();
@@ -180,9 +152,6 @@ public class AllNurseController {
         clearTextfields();
     }
 
-    /**
-     * Clears all contents from all <code>TextField</code>s.
-     */
     private void clearTextfields() {
         this.txfFirstName.clear();
         this.txfSurname.clear();

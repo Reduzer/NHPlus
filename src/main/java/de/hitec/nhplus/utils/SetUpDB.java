@@ -14,19 +14,8 @@ import java.sql.Statement;
 import static de.hitec.nhplus.utils.DateConverter.convertStringToLocalDate;
 import static de.hitec.nhplus.utils.DateConverter.convertStringToLocalTime;
 
-/**
- * Die statische Klasse SetUpDB bietet zwei statische Methoden zum Einrichten und Löschen der Datenbank.
- * Sie verwendet die Klasse ConnectionBuilder und ihren Pfad, um eine Verbindung zur Datenbank aufzubauen.
- * Die Klasse ist ausführbar. Durch Ausführen der Klasse wird eine Verbindung zur Datenbank hergestellt
- * und setUpDb() aufgerufen, um die Datenbank zu löschen, eine saubere Datenbank einzurichten und die
- * Datenbank mit einigen Testdaten zu füllen.
- */
 public class SetUpDB {
 
-    /**
-     * Diese Methode löscht die Datenbank, indem sie die Tabellen löscht. Dann werden die Methoden
-     * zum Einrichten der benötigten Tabellen aufgerufen.
-     */
     public static void setUpDb() {
         Connection connection = ConnectionBuilder.getConnection();
         SetUpDB.wipeDb(connection);
@@ -35,9 +24,6 @@ public class SetUpDB {
         SetUpDB.setUpTableTreatment(connection);
     }
 
-    /**
-     * Diese Methode löscht die Datenbank, indem sie die Tabellen löscht.
-     */
     public static void wipeDb(Connection connection) {
         try (Statement statement = connection.createStatement()) {
             statement.execute("DROP TABLE patient");
@@ -47,9 +33,6 @@ public class SetUpDB {
         }
     }
 
-    /**
-     * Diese Methode richtet die Tabelle für Patienten ein.
-     */
     private static void setUpTablePatient(Connection connection) {
         final String SQL = "CREATE TABLE IF NOT EXISTS patient (" +
                 "   pid INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -66,9 +49,6 @@ public class SetUpDB {
         }
     }
 
-    /**
-     * Diese Methode richtet die Tabelle für Behandlungen ein.
-     */
     private static void setUpTableTreatment(Connection connection) {
         final String SQL = "CREATE TABLE IF NOT EXISTS treatment (" +
                 "   tid INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -88,30 +68,6 @@ public class SetUpDB {
         }
     }
 
-    /**
-     * This Method is for the Setup of the Patient Table
-     * @param None
-     */
-  
-    private static void setUpPatients() {
-        try {
-            PatientDao dao = DaoFactory.getDaoFactory().createPatientDAO();
-            dao.create(new Patient("Seppl", "Herberger", convertStringToLocalDate("1945-12-01"), "4", "202"));
-            dao.create(new Patient("Martina", "Gerdsen", convertStringToLocalDate("1954-08-12"), "5", "010"));
-            dao.create(new Patient("Gertrud", "Franzen", convertStringToLocalDate("1949-04-16"), "3", "002"));
-            dao.create(new Patient("Ahmet", "Yilmaz", convertStringToLocalDate("1941-02-22"), "3", "013"));
-            dao.create(new Patient("Hans", "Neumann", convertStringToLocalDate("1955-12-12"), "2", "001"));
-            dao.create(new Patient("Elisabeth", "Müller", convertStringToLocalDate("1958-03-07"), "5", "110"));
-        } catch (SQLException exception) {
-            exception.printStackTrace();
-        }
-    }
-
-    /**
-     * This Method is for the Setup of the Nurse Table
-     * @param Connection
-     * Diese Methode richtet die Tabelle für Krankenschwestern ein.
-     */
     private static void setUpTableNurse(Connection connection){
         final String SQL = "CREATE TABLE IF NOT EXISTS nurse (" +
                 "   pid INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -130,11 +86,6 @@ public class SetUpDB {
         }
     }
 
-
-    /**
-     * This is the Main Method
-     * @param String[]
-     */
     public void main(String[] args) {
         SetUpDB.setUpDb();
     }

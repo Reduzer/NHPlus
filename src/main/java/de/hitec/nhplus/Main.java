@@ -17,22 +17,27 @@ import java.net.URL;
 public class Main extends Application {
 
     private static Stage m_PrimaryStage;
+    private static Stage m_LoginStage;
+
     private static FXMLLoader m_Loader;
 
     @Override
     public void start(Stage givenStage) {
-        m_PrimaryStage = givenStage;
         m_Loader = new FXMLLoader();
         loginLoad();
     }
 
     public static void mainWindow() {
         try {
+            m_LoginStage.close();
+
+            m_PrimaryStage = new Stage();
+
             m_Loader = new FXMLLoader(Main.class.getResource("/de/hitec/nhplus/MainWindowView.fxml"));
             BorderPane pane = m_Loader.load();
 
             Scene scene = new Scene(pane);
-            m_PrimaryStage.setTitle("NHPlus");
+            m_PrimaryStage.setTitle("NHPlus by Reduzer");
             m_PrimaryStage.setScene(scene);
             m_PrimaryStage.setResizable(false);
             m_PrimaryStage.show();
@@ -47,12 +52,12 @@ public class Main extends Application {
         }
     }
 
-    public void loginLoad(){
+    public static void loginLoad(){
         try{
-            Stage m_LoginStage = new Stage();
+            m_LoginStage = new Stage();
 
             FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("/de/hitec/nhplus/LoginView.fxml"));
+            fxmlLoader.setLocation(Main.class.getResource("/de/hitec/nhplus/LoginView.fxml"));
 
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = new Stage();

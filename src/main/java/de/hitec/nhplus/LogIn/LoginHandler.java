@@ -1,5 +1,6 @@
 package de.hitec.nhplus.LogIn;
 
+import de.hitec.nhplus.Main;
 import de.hitec.nhplus.datastorage.ConnectionBuilder;
 
 import java.sql.Connection;
@@ -42,6 +43,7 @@ public class LoginHandler {
         //sPassword = m_Hashing.getHash(sPassword);
 
         if(checkLogin()){
+            Main.mainWindow();
             return true;
         }
         else
