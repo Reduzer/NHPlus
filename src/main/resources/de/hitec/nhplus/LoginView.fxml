@@ -35,7 +35,7 @@
     <bottom>
         <VBox id="vBoxBottom" alignment="CENTER" styleClass="vBoxBottom" stylesheets="Application.css" BorderPane.alignment="CENTER" minWidth="-Infinity" minHeight="-Infinity" prefHeight="80.0">
             <children>
-                <Button id="ButtonLogIn" contentDisplay="CENTER" mnemonicParsing="false" text="Login now" onAction="#logIn">
+                <Button id="ButtonLogin" contentDisplay="CENTER" mnemonicParsing="false" text="Login now" onAction="#logIn">
                     <VBox.margin>
                         <Insets />
                     </VBox.margin>

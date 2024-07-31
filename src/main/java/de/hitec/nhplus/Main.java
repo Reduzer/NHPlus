@@ -1,5 +1,6 @@
 package de.hitec.nhplus;
 
+import de.hitec.nhplus.controller.MainWindowController;
 import de.hitec.nhplus.datastorage.ConnectionBuilder;
 
 import javafx.application.Application;
@@ -29,7 +30,7 @@ public class Main extends Application {
 
     public static void mainWindow() {
         try {
-            m_LoginStage.close();
+            //m_LoginStage.close();
 
             m_PrimaryStage = new Stage();
 
